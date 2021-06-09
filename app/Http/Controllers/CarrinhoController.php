@@ -96,8 +96,6 @@ class CarrinhoController extends Controller
 
       public function excluirCarrinho ($id){
 
-      
-
        $dados = Carrinho::Find($id);
      //  $dados->destroy($id);
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
+use App\Services\ProdutoService;
 
 class ProdutoController extends Controller
 {
@@ -16,13 +18,18 @@ class ProdutoController extends Controller
      * @return void
      */
 
+     protected $service;
 
      protected $jwt;
 
 
-    public function __construct(JWTAuth $jwt)
+    public function __construct(JWTAuth $jwt, ProdutoService $service)
     {
          $this->jwt = $jwt;
+
+         $this->service = $service;
+
+
         $this->middleware('auth:api', [
                     'except' => ['usuarioLogin', 'cadastrarUsuario']
         ]);
@@ -35,6 +42,16 @@ class ProdutoController extends Controller
 
 
      }
+
+    public function getAll()
+    {
+       try {
+            return response()->json($this->service->getAll(), Response::HTTP_OK);
+       } catch (\Exception $e) {
+           return $this->error($e->getMessage());
+        }
+    }
+
 
        public function cadastrarProduto(Request $request){
 
@@ -89,9 +106,7 @@ class ProdutoController extends Controller
 
      public function  selecionarProduto($id){
 
-       
 
-  
     $dados = Produto::Find($id);
      
 
@@ -106,16 +121,12 @@ class ProdutoController extends Controller
        $dados = Produto::Find($id);
      
 
-$deletado=$dados->destroy($id);
+          $deletado=$dados->destroy($id);
 
     if($deletado){
         return response()->json(['mensagem'=>'Excluido com sucesso!'],200);
 
-
-
 }else{
-
-
 
    return response()->json(['mensagem'=>'Falha ao Excluir!'],400);
 }

@@ -19,16 +19,16 @@ $router->get('/teste', function () use ($router) {
     return '[routes/web.php] Metodo GET URL: /teste';
 });
 
-
-// $router->get('/produtos', 'ProdutoController@listarProduto');
-
-
   /**
      *Grupo de rotas Produtos
    */
+
+ 
+
 $router->group(['prefix' => 'produtos'], function () use ($router) {
 
-
+$router->get("/", "ProdutoController@getAll");
+ 
 $router->get('/{id}', 'ProdutoController@selecionarProduto'); 
 
 $router->post('/cadastrar', 'ProdutoController@cadastrarProduto'); 
@@ -40,21 +40,8 @@ $router->delete('/{id}/excluir', 'ProdutoController@excluirProduto');
 
 });
 
-Route::get('/selecionarTodos2', function () {
-
-$pedido =App\Pedido::all();
-
-dd($pedido->teste_eloquente);
-
-
-
-});
-
 
 $router->group(['prefix' => 'pedidos'], function () use ($router) {
-
-
- 
 $router->get('/todosPedidos', 'PedidoController@selecionarTodos');
 $router->post('/cadastrar', 'PedidoController@cadastrarPedido'); 
 
@@ -81,6 +68,3 @@ $router->post('/autenticacao', 'UsuarioController@usuarioAutenticado');
 $router->post('/logout', 'UsuarioController@usuarioLogout');
 });
 
-
-//$router->get('/usuarios', 'UsuarioController@mostrarTodosUsuarios'); 
-//$router->get('/login', 'UsuarioController@usuarioLogin'); 

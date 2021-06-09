@@ -21,11 +21,11 @@ class PedidoController extends Controller
      */
 
 
-     protected $jwt;
+        protected $jwt;
 
-     protected $produto;
+        protected $produto;
 
-      protected $carrinho;
+        protected $carrinho;
 
     public function __construct(JWTAuth $jwt, ProdutoController $produto, CarrinhoController $carrinho)
     {
@@ -85,7 +85,7 @@ $control= 0;
 
          if(empty($check)) {
 
-          echo $last_insert_id;
+                           ///  echo $last_insert_id;
 
                         $dados=Pedido::find($last_insert_id);
                         $deletado=$dados->destroy($last_insert_id);
@@ -178,7 +178,7 @@ public function  selecionarTodos2(){
 
    $dados = Pedido::teste_eloquente();
 
-   // $dados2 = $this->pedido->algo();
+   
      return response()->json($dados);
 
 }
@@ -187,8 +187,6 @@ public function  selecionarTodos2(){
      public function  selecionarPedido($id){
 
        
-
-   
      $dados = Pedido::Find($id);
     
 
@@ -206,8 +204,6 @@ public function  selecionarTodos2(){
 
     if($deletado){
         return response()->json(['mensagem'=>'Excluido com sucesso!'],200);
-
-
 
 }else{
 
